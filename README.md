@@ -19,7 +19,7 @@ Each contributor adds a unique code fragment that forms part of a shared city.
 
 > [!TIP]
 > Libraries allowed! Check out https://esm.sh/ for loading libraries without installing them.
-> Thanks for the tip @stanko!
+> Thanks for the tip @Stanko!
 
 ---
 

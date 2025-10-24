@@ -1,6 +1,6 @@
 # Cityscape
 
-(![Cityscape render](./cityscape-resized.png))[https://aidanwyber.github.io/Cityscape/]
+[![Cityscape render](./cityscape-resized.png)](https://aidanwyber.github.io/Cityscape/)
 
 **Cityscape** is a collaborative, generative artwork by the Creative Coding Amsterdam community using [p5.js](https://p5js.org/).
 

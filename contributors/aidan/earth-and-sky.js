@@ -1,6 +1,6 @@
 let horizonHeight;
 
-function earthAndSky() {
+export function earthAndSky() {
 	horizonHeight = round(height * (2 / 3));
 	push();
 	fillGradient('#257CEF', '#7BBFE1', 0, 0, 0, horizonHeight);

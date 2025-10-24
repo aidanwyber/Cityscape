@@ -24,7 +24,7 @@ Run the piece in your browser.
 ## Contributing
 
 We’re building a collaborative, browser-rendered community artwork using **p5.js (global mode)**.
-All contributions live in `contributors/<your-name>/` and are loaded on the page via `<script>` tags in `/index.html`.
+All contributions live in `contributors/<your-name>/` and are loaded on in `sketch.js` with `import`.
 
 ### 1. Fork & set up locally
 
@@ -38,7 +38,7 @@ All contributions live in `contributors/<your-name>/` and are loaded on the page
 ### 2. Create a feature branch
 
 ```bash
-git checkout -b feat/your-name-your-piece
+git checkout -b feat/your-name-your-mod
 ```
 
 Use a descriptive branch name (e.g., feat/aidan-earth-and-sky).
@@ -63,22 +63,22 @@ Use lowercase, hyphenated names (e.g., earth-and-sky.js).
 
 If you add assets, keep them small (<1MB if possible).
 
-#### Include your script in `index.html`
+#### Include your drawing function in `sketch.js`
 
-```html
-<body>
-	<!-- your contribution(s): add below -->
-	<!-- (in the order of the `functions` array) -->
+```js
+// import your functions here
+import { earthAndSky } from './contributors/aidan/earth-and-sky.js';
+import { yourDrawingFunction } from './contributors/your-name/your-mod.js';
 
-	<script src="contributors/aidan/earth-and-sky.js"></script>
-	<script src="contributors/<your-name>/<your-script>.js"></script>
-
-	<!-- sketch.js must run last -->
-	<script src="sketch.js"></script>
-</body>
+const drawingFunctions = [
+	// add your functions to this array
+	// they will be called one by one each frame
+	earthAndSky,
+	yourDrawingFunction,
+];
 ```
 
-Load order matters: your file should be available before sketch.js runs.
+Drawing order matters: put your function in the right spot in the `drawingFunctions` array.
 
 ## 4. How to get your changes into the main project
 
@@ -88,26 +88,19 @@ To contribute directly to this project:
 
 ```bash
 git add .
-git commit -m "feat(contributors/your-name): add 'Earth and Sky' layer"
+git commit -m "add earth and sky"
 ```
 
 2. Push the branch to your fork
 
 ```bash
-git push -u origin feat/your-name-your-piece
+git push -u origin feat/your-name-your-mod
 ```
 
 3. Open a pull request to the upstream repo
 
 -   Title: feat: add your-name — piece title
 -   Description: What your layer does, any knobs, and screenshots/gifs if helpful.
-
-#### Pull request checklist:
-
--   [ ] My script is placed under `contributors/<my-name>/`.
--   [ ] I added my `<script>` before `sketch.js` in `index.html`.
--   [ ] I did not define a global `setup()` or `draw()` in my contribution.
--   [ ] Assets (if any) are small and inside contributors/<my-name>/assets/.
 
 ---
 

@@ -140,6 +140,4 @@ As long as you:
 -   Give **appropriate credit**.
 -   Share any derivative works under the **same CC BY-SA 4.0 license**.
 
-```
-
-```
+---

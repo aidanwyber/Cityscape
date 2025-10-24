@@ -1,0 +1,19 @@
+html,
+body,
+main {
+	margin: 0;
+	height: 100%;
+}
+main {
+	margin: 0 4vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+canvas {
+	display: block;
+	width: 100%;
+
+	border: 2vw solid #7d4627;
+	border-style: ridge;
+}

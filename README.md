@@ -17,7 +17,9 @@ Each contributor adds a unique code fragment that forms part of a shared city.
 3. When contributing, you only add code and don't remove any from others, unless absolutely necessary to keep it running.
 4. The project stops at 10,000 lines of code.
 
-Run the piece in your browser.
+> [!TIP]
+> Libraries allowed! Check out https://esm.sh/ for loading libraries without installing them.
+> Thanks for the tip @stanko!
 
 ---
 
@@ -31,9 +33,12 @@ All contributions live in `contributors/<your-name>/` and are loaded on in `sket
 1. **Fork** this repository to your GitHub account.
 2. **Clone** your fork locally.
 3. Launch a simple local server to view `index.html` (needed to run p5.js):
-    - With Node.js: `npx serve` (then open the shown URL)
+    - With Node.js: `npx http-server -o -p 8000`
     - With Python: `python3 -m http.server` and open `http://localhost:8000`
     - Have PHP? `php -S localhost:8000` and open `http://localhost:8000`
+
+> [!TIP]
+> Make sure to have the terminal be in the correct directory!
 
 ### 2. Create a feature branch
 

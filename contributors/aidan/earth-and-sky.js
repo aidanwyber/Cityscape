@@ -1,13 +1,50 @@
-let horizonHeight;
+export let horizonHeight;
 
 export function earthAndSky() {
 	horizonHeight = round(height * (2 / 3));
 	push();
-	fillGradient('#257CEF', '#7BBFE1', 0, 0, 0, horizonHeight);
+	noStroke();
+	fillGradient(...skyColors(dayProgress()), 0, 0, 0, horizonHeight);
 	rect(0, 0, width, horizonHeight);
 	fill('#1E2627');
 	rect(0, horizonHeight, width, height - horizonHeight);
 	pop();
+}
+
+function skyColors(t) {
+	const stops = [
+		{ t: 6 / 24, cTop: color('#8B5FBF'), cBot: color('#F28DA8') }, // dawn -> ~7:00
+		{ t: 7 / 24, cTop: color('#ff7636'), cBot: color('#ffd36c') }, // sunrise
+		{ t: 8 / 24, cTop: color('#91c9fd'), cBot: color('#BDE0FE') }, // morning
+		{ t: 13 / 24, cTop: color('#49affd'), cBot: color('#8dccff') }, // midday
+		{ t: 17 / 24, cTop: color('#74C0FC'), cBot: color('#4DABF7') }, // afternoon
+		{ t: 20.5 / 24, cTop: color('#F9A857'), cBot: color('#C85B8F') }, // sunset
+		{ t: 21.5 / 24, cTop: color('#463386'), cBot: color('#F49D65') }, // dusk
+		{ t: 23 / 24, cTop: color('#0B1D51'), cBot: color('#102C75') }, // night -> ~23:00
+	];
+
+	let i = t > stops.at(-1).t ? stops.length - 1 : 0;
+	while (i < stops.length && t > stops[i].t) i++;
+
+	const a = stops.at(i - 1);
+	const b = stops[i];
+
+	if (a.t > b.t) a.t -= 1;
+
+	const q = map(t, a.t, b.t, 0, 1);
+
+	print(t, i, a, b, q);
+	return [lerpColor(a.cTop, b.cTop, q), lerpColor(a.cBot, b.cBot, q)];
+}
+
+function dayProgress() {
+	const startOfDay = new Date();
+	startOfDay.setHours(0, 0, 0, 0);
+	const msSinceStart = Math.round(
+		(new Date().getTime() - startOfDay.getTime()) / 1000
+	);
+	const msInDay = 24 * 60 * 60 * 1000;
+	return msSinceStart / msInDay;
 }
 
 function fillGradient(colA, colB, x1, y1, x2, y2) {

@@ -13,7 +13,8 @@ def count_lines_in_contributors(base_dir='contributors'):
             path = os.path.join(root, file)
             try:
                 with open(path, 'r', encoding='utf-8') as f:
-                    line_count = sum(1 for _ in f if _.strip() != '')
+                    # ignore empty lines and comments
+                    line_count = sum(1 for _ in f if _.strip() != '' and _.strip()[:2] != '//')
                     total_lines += line_count
                     file_count += 1
             except Exception as e:

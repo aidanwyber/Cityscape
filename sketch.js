@@ -13,14 +13,18 @@ let functionIndex = 0;
 // protected
 window.setup = () => {
 	pixelDensity(1);
-	const canvas = createCanvas(3840, 2160); // 4K
+	const canvas = createCanvas(3840, 2160, WEBGL); // 4K
 	canvas.elt.style = '';
+	curveDetail(100);
+	bezierDetail(100);
 };
 
 // protected
 window.draw = () => {
 	// make sure to preserve transformations and drawing styles
 	// with push() and pop()
+	resetMatrix();
+	translate(-width / 2, -height / 2);
 	push();
 	// draw each function on every next iteration to build the city
 	drawingFunctions[functionIndex++]();

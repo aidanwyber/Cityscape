@@ -1,11 +1,25 @@
-export let horizonHeight;
+let horizonHeight;
 
 export function earthAndSky() {
 	horizonHeight = round(height * (2 / 3));
 	push();
 	noStroke();
-	fillGradient(...skyColors(dayProgress()), 0, 0, 0, horizonHeight);
-	rect(0, 0, width, horizonHeight);
+	const [skyTop, skyBot] = skyColors(dayProgress());
+	// fillGradient(skyTop, skyBot, 0, 0, 0, horizonHeight);
+	// rect(0, 0, width, horizonHeight);
+	beginShape();
+	fill(skyTop);
+	vertex(0, 0);
+	fill(skyTop);
+	vertex(width, 0);
+	fill(skyBot);
+	vertex(width, horizonHeight);
+	fill(skyBot);
+	vertex(0, horizonHeight);
+	endShape(CLOSE);
+
+	print(width, height);
+
 	fill('#1E2627');
 	rect(0, horizonHeight, width, height - horizonHeight);
 	pop();
@@ -33,7 +47,6 @@ function skyColors(t) {
 
 	const q = map(t, a.t, b.t, 0, 1);
 
-	print(t, i, a, b, q);
 	return [lerpColor(a.cTop, b.cTop, q), lerpColor(a.cBot, b.cBot, q)];
 }
 
@@ -47,9 +60,9 @@ function dayProgress() {
 	return msSinceStart / msInDay;
 }
 
-function fillGradient(colA, colB, x1, y1, x2, y2) {
-	let gradient = drawingContext.createLinearGradient(x1, y1, x2, y2);
-	gradient.addColorStop(0, colA);
-	gradient.addColorStop(1, colB);
-	drawingContext.fillStyle = gradient;
-}
+// function fillGradient(colA, colB, x1, y1, x2, y2) {
+// 	let gradient = drawingContext.createLinearGradient(x1, y1, x2, y2);
+// 	gradient.addColorStop(0, colA);
+// 	gradient.addColorStop(1, colB);
+// 	drawingContext.fillStyle = gradient;
+// }

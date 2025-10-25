@@ -24,6 +24,7 @@ window.draw = () => {
 	// make sure to preserve transformations and drawing styles
 	// with push() and pop()
 	resetMatrix();
+	// put the origin of the canvas at the top left
 	translate(-width / 2, -height / 2);
 	push();
 	// draw each function on every next iteration to build the city

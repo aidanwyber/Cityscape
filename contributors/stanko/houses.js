@@ -1,3 +1,5 @@
+// Some of the hackiest code I ever written, sorry and good luck reading it :D
+
 function cut(start, end, ratio) {
 	const r1 = {
 		x: start.x * (1 - ratio) + end.x * ratio,
@@ -54,8 +56,6 @@ export default function random(
 
 	return Math.floor(value);
 }
-
-export let globalOptions;
 
 function translate(polygon, v) {
 	return polygon.map(p => {

@@ -1,12 +1,14 @@
 // import your functions here
 import { earthAndSky } from './contributors/aidan/earth-and-sky.js';
 import { UFOs } from './contributors/bedir/ufos.js';
+import { getHouses } from './contributors/stanko/houses.js';
 
 const drawingFunctions = [
 	// add your functions to this array
 	// they will be called one by one each frame
 	earthAndSky,
 	UFOs,
+	getHouses,
 ];
 let functionIndex = 0;
 

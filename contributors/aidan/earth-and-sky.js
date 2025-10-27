@@ -1,10 +1,10 @@
-let horizonHeight;
+export let horizonHeight;
 
-export function earthAndSky() {
+export function earthAndSky(t = undefined) {
 	horizonHeight = round(height * (2 / 3));
 	push();
 	noStroke();
-	const [skyTop, skyBot] = skyColors(dayProgress());
+	const [skyTop, skyBot] = skyColors(t ?? dayProgress());
 	// fillGradient(skyTop, skyBot, 0, 0, 0, horizonHeight);
 	// rect(0, 0, width, horizonHeight);
 	beginShape();
@@ -23,7 +23,7 @@ export function earthAndSky() {
 	pop();
 }
 
-function skyColors(t) {
+export function skyColors(t /* in range [0, 1> */) {
 	const stops = [
 		{ t: 6 / 24, cTop: color('#8B5FBF'), cBot: color('#F28DA8') }, // dawn -> ~7:00
 		{ t: 7 / 24, cTop: color('#ff7636'), cBot: color('#ffd36c') }, // sunrise
@@ -35,29 +35,43 @@ function skyColors(t) {
 		{ t: 23 / 24, cTop: color('#0B1D51'), cBot: color('#102C75') }, // night -> ~23:00
 	];
 
-	let i = t > stops.at(-1).t ? stops.length - 1 : 0;
-	while (i < stops.length && t > stops[i].t) i++;
+	let endStopInd = 0;
+	while (stops[endStopInd % stops.length].t < t && endStopInd < stops.length)
+		endStopInd++;
 
-	const a = stops.at(i - 1);
-	const b = stops[i];
+	const prev = stops[(endStopInd - 1 + stops.length) % stops.length];
+	const next = stops[endStopInd % stops.length];
 
-	if (a.t > b.t) a.t -= 1;
+	if (prev.t > next.t && t > 0.5) next.t += 1;
+	else if (prev.t > next.t && t < 0.5) prev.t -= 1;
 
-	const q = map(t, a.t, b.t, 0, 1);
+	const q = map(t, prev.t, next.t, 0, 1);
 
-	return [lerpColor(a.cTop, b.cTop, q), lerpColor(a.cBot, b.cBot, q)];
+	return [
+		lerpColor(prev.cTop, next.cTop, q),
+		lerpColor(prev.cBot, next.cBot, q),
+	];
 }
 
-function dayProgress() {
+export function dayProgress() {
 	const startOfDay = new Date();
 	startOfDay.setHours(0, 0, 0, 0);
 	const msSinceStart = Math.round(
-		(new Date().getTime() - startOfDay.getTime()) / 1000
+		new Date().getTime() - startOfDay.getTime()
 	);
-	const msInDay = 24 * 60 * 60 * 1000;
-	return msSinceStart / msInDay;
+	return msSinceStart / (24 * 60 * 60 * 1000);
 }
 
+// debug/test:
+
+// window.dayProgress = dayProgress;
+// window.skyColors = skyColors;
+// window.earthAndSky = earthAndSky;
+
+// test sky colors:
+// let i = 0; const n = 100; function q(){if (i < n){earthAndSky(i/n);i++;setTimeout(q, 100);}} q();
+
+// p2d mode:
 // function fillGradient(colA, colB, x1, y1, x2, y2) {
 // 	let gradient = drawingContext.createLinearGradient(x1, y1, x2, y2);
 // 	gradient.addColorStop(0, colA);

@@ -19,6 +19,7 @@ window.setup = () => {
 	canvas.elt.style = '';
 	curveDetail(100);
 	bezierDetail(100);
+	frameRate(2);
 };
 
 // protected

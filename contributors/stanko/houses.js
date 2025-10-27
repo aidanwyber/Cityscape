@@ -40,15 +40,8 @@ function chaikin(curve, iterations = 1, closed = false, ratio = 0.25) {
 	return curve;
 }
 
-export default function random(
-	min = 0,
-	max = 1,
-	rng = null,
-	decimalPlaces = 16,
-) {
-	const rgnFn = rng || Math.random;
-
-	const value = rgnFn() * (max - min) + min;
+function random(min = 0, max = 1, decimalPlaces = 16) {
+	const value = Math.random() * (max - min) + min;
 
 	if (decimalPlaces) {
 		return parseFloat(value.toFixed(decimalPlaces));
@@ -106,7 +99,7 @@ function getDoor(w, h, t, isLeft = true) {
 
 	// Boards
 	const step = random(0.12, 0.16);
-	const count = random(0, 4, null, 0);
+	const count = random(0, 4, 0);
 
 	const boards = new Array(count).fill('').map((_, index) => {
 		const x = w * step * (index + 1);
@@ -184,19 +177,6 @@ function getArc(center, r, startAngle, endAngle, step = Math.PI / 90) {
 	return points;
 }
 
-function distance(v1, v2) {
-	const x = v1.x - v2.x;
-	const y = v1.y - v2.y;
-	return Math.sqrt(x * x + y * y);
-}
-
-function add(v1, v2) {
-	return {
-		x: v1.x + v2.x,
-		y: v1.y + v2.y,
-	};
-}
-
 function getBush(n = 4, size = 30) {
 	const factor = 1 + 3 / n;
 
@@ -231,13 +211,6 @@ function getBush(n = 4, size = 30) {
 			},
 		]);
 	}
-
-	// bush.push(
-	//   {
-	//     x: size,
-	//     y: 0,
-	//   }
-	// );
 
 	return translateBezier(bush, { x: 0, y: -1.5 });
 }
@@ -370,13 +343,6 @@ function getCircle(center, r, segmentsCount = 32) {
 	return circle;
 }
 
-function scale(p, scale) {
-	return {
-		x: p.x * scale,
-		y: p.y * scale,
-	};
-}
-
 function getHouse(x, y, size = 1) {
 	const w = random(80, 120) * size;
 	const h = random(60, 120) * size;
@@ -482,7 +448,7 @@ function getHouse(x, y, size = 1) {
 	});
 
 	const bushes = [
-		translateBezier(getBush(random(4, 7, null, 0), random(25, 45)), {
+		translateBezier(getBush(random(4, 7, 0), random(25, 45)), {
 			x: (w + d) * random(0, 0.4),
 			y: 0,
 		}),
@@ -490,7 +456,7 @@ function getHouse(x, y, size = 1) {
 
 	if (random() > 0.5) {
 		bushes.push(
-			translateBezier(getBush(random(4, 7, null, 0), random(15, 30)), {
+			translateBezier(getBush(random(4, 7, 0), random(15, 30)), {
 				x: (w + d) * random(0.6, 1),
 				y: 0,
 			}),
@@ -501,9 +467,9 @@ function getHouse(x, y, size = 1) {
 	const rStep1 = random(0.08, 0.11) * d;
 	const rStep2 = random(0.08, 0.12) * d;
 	const rStep3 = random(0.08, 0.12) * d;
-	const rCount1 = random(0, 8, null, 0);
-	const rCount2 = random(0, 6, null, 0);
-	const rCount3 = random(0, 6, null, 0);
+	const rCount1 = random(0, 8, 0);
+	const rCount2 = random(0, 6, 0);
+	const rCount3 = random(0, 6, 0);
 
 	const roof = [
 		...getRoofLines(h, d, a, rStep1, rCount1),
@@ -642,7 +608,6 @@ function getHouse(x, y, size = 1) {
 	};
 }
 
-const w = 3840;
 const h = 2160;
 
 const strokePolygon = (points, isClosed) => {
@@ -668,7 +633,6 @@ function bezierPath(polygon, isClosed = true) {
 	for (let i = 0; i < polygon.length; i++) {
 		const item = polygon[i];
 		if (Array.isArray(item)) {
-			// item = [cp1, cp2, p]
 			bezierVertex(
 				item[0].x,
 				h - item[0].y,
@@ -697,6 +661,7 @@ export function getHouses() {
 		let left = random(0, 300);
 		for (let x = 0; x < 6; x++) {
 			if (random() > 0.75) {
+				left += random(80, 120);
 				continue;
 			}
 			const house = getHouse(2800 + left, 580 - 120 * y + random(0, 80));

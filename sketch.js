@@ -1,6 +1,7 @@
 // import your functions here
 import { earthAndSky } from './contributors/aidan/earth-and-sky.js';
 import { UFOs } from './contributors/bedir/ufos.js';
+import { huizen } from './contributors/jos/huisklein.js';
 import { getHouses } from './contributors/stanko/houses.js';
 
 const drawingFunctions = [
@@ -9,6 +10,7 @@ const drawingFunctions = [
 	earthAndSky,
 	UFOs,
 	getHouses,
+	huizen,
 ];
 let functionIndex = 0;
 

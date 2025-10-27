@@ -18,8 +18,6 @@ export function earthAndSky() {
 	vertex(0, horizonHeight);
 	endShape(CLOSE);
 
-	print(width, height);
-
 	fill('#1E2627');
 	rect(0, horizonHeight, width, height - horizonHeight);
 	pop();
